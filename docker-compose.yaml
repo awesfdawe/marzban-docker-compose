@@ -1,0 +1,55 @@
+services:
+  marzban:
+    image: gozargah/marzban:v0.8.4
+    container_name: marzban
+    environment:
+      - SUDO_USERNAME=${SUDO_USERNAME}
+      - SUDO_PASSWORD=${SUDO_PASSWORD}
+      - DASHBOARD_PATH=${DASHBOARD_PATH}
+      - XRAY_SUBSCRIPTION_PATH=${SUBSCRIPTION_PATH}
+      - XRAY_SUBSCRIPTION_PATH_URL_PREFIX=https://${DOMAIN}:443
+      - CUSTOM_TEMPLATES_DIRECTORY=/var/lib/marzban/templates/
+      - CLASH_SUBSCRIPTION_TEMPLATE=clash/default.yml
+      - UVICORN_UDS=/var/lib/marzban/marzban.socket
+      - XRAY_JSON=/var/lib/marzban/xray_config.json
+      - XRAY_EXECUTABLE_PATH=/var/lib/marzban/xray_core/xray
+      # - XRAY_ASSETS_PATH=/var/lib/marzban/xray_core/xray
+      - SQLALCHEMY_DATABASE_URL=sqlite:////var/lib/marzban/db.sqlite3
+    volumes:
+      - ./settings/xray_config.rendered.json:/var/lib/marzban/xray_config.json
+      - ./settings/clash.yaml:/var/lib/marzban/templates/clash/default.yml
+      - ./xray:/var/lib/marzban/xray_core/
+      - marzban_data:/var/lib/marzban/
+    network_mode: "host"
+    restart: unless-stopped
+
+  caddy:
+    image: caddy:2.10.2-alpine
+    container_name: caddy
+    environment:
+      - DOMAIN=${DOMAIN}
+      - DASHBOARD_PATH=${DASHBOARD_PATH}
+      - SUBSCRIPTION_PATH=${SUBSCRIPTION_PATH}
+    volumes:
+      - ./settings/Caddyfile:/etc/caddy/Caddyfile
+      - caddy_data:/data/
+      - marzban_data:/var/lib/marzban/
+    ports:
+      - 127.0.0.1:8443:8443
+      - 80:80
+    depends_on:
+      marzban:
+        condition: service_started
+    restart: unless-stopped
+
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    volumes:
+      - jellyfin_data:/config/
+    restart: unless-stopped
+
+volumes:
+  caddy_data:
+  marzban_data:
+  jellyfin_data:

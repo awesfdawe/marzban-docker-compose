@@ -1,0 +1,5 @@
+.env
+settings/xray_config.rendered.json
+
+xray/*
+!xray/.gitkeep
