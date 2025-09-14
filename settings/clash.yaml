@@ -1,131 +1,95 @@
-mixed-port: 7890
-#external-controller: 127.0.0.1:9090
-allow-lan: true
-tcp-concurrent: true
-enable-process: true
-find-process-mode: strict
 mode: rule
-log-level: info
-ipv6: false
-bind-address: "*"
-keep-alive-interval: 30
+log-level: warning
+find-process-mode: strict
 unified-delay: false
-
+tcp-concurrent: true
 profile:
   store-selected: true
   store-fake-ip: true
 
 tun:
   enable: true
-  stack: mixed
+  stack: system
   dns-hijack:
     - "any:53"
   auto-route: true
   auto-detect-interface: true
   strict-route: true
 
+{{ conf | except("proxy-groups", "port", "mode") | yaml }}
+proxy-groups:
+  - name: PROXY
+    type: select
+    proxies:
+    {{ proxy_remarks | yaml | indent(2) }}
+
 dns:
   enable: true
-  use-hosts: true
-  ipv6: false
-  # ipv6: true
-  enhanced-mode: redir-host
-  listen: 127.0.0.1:6868
   default-nameserver:
-    - 1.1.1.1
-    - 8.8.8.8
-    - 1.0.0.1
+    - tls://1.1.1.1
   nameserver:
-    - https://1.1.1.1/dns-query#PROXY
-    - https://8.8.8.8/dns-query#PROXY
-    - https://1.0.0.1/dns-query#PROXY
-    - 8.8.8.8
-    - 1.1.1.1
+    - https://cloudflare-dns.com/dns-query
 
-{{ conf | except("proxy-groups", "port", "mode", "rules") | yaml }}
+listeners:
+  - listen: 127.0.0.1
+    name: mixed-in
+    port: 1080
+    proxy: PROXY
+    type: socks
+    udp: true
+    users: []
 
-proxy-groups:
-- name: 'PROXY'
-  type: 'select'
-  proxies:
-  - '⚡️ Fastest'
-  - '📶 First Available'
-  {{ proxy_remarks | yaml | indent(2) }}
-
-- name: '⚡️ Fastest'
-  type: 'url-test'
-  tolerance: 150
-  url: 'https://www.gstatic.com/generate_204'
-  interval: 300
-  proxies:
-  {{ proxy_remarks | yaml | indent(2) }}
-
-- name: '📶 First Available'
-  type: 'fallback'
-  url: 'https://www.gstatic.com/generate_204'
-  interval: 300
-  proxies:
-  {{ proxy_remarks | yaml | indent(2) }}
-  
 rule-providers:
-  ru-bundle:
+  private:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/mrs/private.mrs
+    interval: 86400
+
+  hagezi-pro:
     type: http
     behavior: domain
     format: mrs
-    url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/ru-bundle/rule.mrs
-    path: ./ru-bundle/rule.mrs
+    url: https://cdn.jsdelivr.net/gh/awesfdawe/hagezi-mihomo-rule-sets@main/hagezi/pro.mrs
     interval: 86400
-  #refilter_domains:
-    #type: http
-    #behavior: domain
-    #format: mrs
-    #url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/re-filter/domain-rule.mrs
-    #path: ./re-filter/domain-rule.mrs
-    #interval: 86400
-  #refilter_ipsum:
-    #type: http
-    #behavior: ipcidr
-    #format: mrs
-    #url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/re-filter/ip-rule.mrs
-    #path: ./re-filter/ip-rule.mrs
-    #interval: 86400
-  #oisd_big:
-    #type: http
-    #behavior: domain
-    #format: mrs
-    #url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/oisd/big.mrs
-    #path: ./oisd/big.mrs
-    #interval: 86400
-  #oisd_small:
-    #type: http
-    #behavior: domain
-    #format: mrs
-    #url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/oisd/small.mrs
-    #path: ./oisd/small.mrs
-    #interval: 86400
-  #oisd_nsfw_small:
-    #type: http
-    #behavior: domain
-    #format: mrs
-    #url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/oisd/nsfw_small.mrs
-    #path: ./oisd/nsfw_small.mrs
-    #interval: 86400
-  #oisd_nsfw_big:
-    #type: http
-    #behavior: domain
-    #format: mrs
-    #url: https://github.com/legiz-ru/mihomo-rule-sets/raw/main/oisd/nsfw.mrs
-    #path: ./oisd/nsfw_big.mrs
-    #interval: 86400
+
+  hagezi-tif:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/awesfdawe/hagezi-mihomo-rule-sets@main/hagezi/tif.mrs
+    interval: 86400
+
+  itdoginfo-inside-russia:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@refs/heads/main/ru-bundle/itdoginfo-inside-russia.mrs
+    interval: 86400
+
+  telegram:
+    type: http
+    behavior: ipcidr
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/mrs/telegram.mrs
+    interval: 86400
+
 rules:
-  # - RULE-SET,oisd_small,REJECT
-  # - RULE-SET,oisd_big,REJECT
-  # - RULE-SET,oisd_nsfw_small,REJECT
-  # - RULE-SET,oisd_nsfw_big,REJECT
-  # - PROCESS-NAME,Discord.exe,PROXY
-  # - PROCESS-NAME,com.supercell.clashofclans,PROXY
-  # - PROCESS-NAME,com.supercell.brawlstars,PROXY
-  - RULE-SET,ru-bundle,PROXY
-  # - RULE-SET,refilter_domains,PROXY
-  # - RULE-SET,refilter_ipsum,PROXY
+  - RULE-SET,private,DIRECT
+
+  - RULE-SET,hagezi-pro,REJECT
+  - RULE-SET,hagezi-tif,REJECT
+
+  - RULE-SET,itdoginfo-inside-russia,PROXY
+
+  - PROCESS-NAME,Discord.exe,PROXY
+  - PROCESS-NAME,Vesktop.exe,PROXY
+  - PROCESS-NAME,com.discord,PROXY
+  - PROCESS-NAME,com.supercell.brawlstars,PROXY
+  - PROCESS-NAME,com.supercell.clashofclans,PROXY
+  - PROCESS-NAME,com.supercell.clashroyale,PROXY
+
+  - AND,((RULE-SET,telegram),(DST-PORT,444-65535)),PROXY # Телеграм звонки в прокси
+
   - MATCH,DIRECT

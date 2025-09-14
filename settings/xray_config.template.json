@@ -13,7 +13,7 @@
             },
             {
                 "ip": [
-                    "geoip:ru"
+                    "ext:geoip.dat:ru"
                 ],
                 "outboundTag": "WARP",
                 "type": "field"
@@ -78,6 +78,10 @@
             "tag": "WARP",
             "settings": {
                 "secretKey": "$WG_PRIVATEKEY",
+                "address": [
+                    "172.16.0.2/32",
+                    "2606:4700:110:8756:9135:af04:3778:40d9/128"
+                ],
                 "peers": [
                     {
                         "endpoint": "$WG_ENDPOINT",
@@ -85,12 +89,7 @@
                     }
                 ],
                 "mtu": 1280,
-                "reserved": [
-                    1,
-                    2,
-                    3
-                ],
-                "domainStrategy": "ForceIP"
+                "noKernelTun": true
             }
         }
     ]

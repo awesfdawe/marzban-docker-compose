@@ -2,13 +2,11 @@
     https_port 8443
 }
 
-{$DOMAIN} {
-    @dashboard_path path {$DASHBOARD_PATH}
-    @subscription_path path {$SUBSCRIPTION_PATH}
-    handle @dashboard_path {
+$DOMAIN {
+    handle $DASHBOARD_PATH {
         reverse_proxy unix//var/lib/marzban/marzban.socket
     }
-    handle @subscription_path {
+    handle $SUBSCRIPTION_PATH {
         reverse_proxy unix//var/lib/marzban/marzban.socket
     }
     handle /api/* {

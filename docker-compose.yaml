@@ -13,12 +13,13 @@ services:
       - UVICORN_UDS=/var/lib/marzban/marzban.socket
       - XRAY_JSON=/var/lib/marzban/xray_config.json
       - XRAY_EXECUTABLE_PATH=/var/lib/marzban/xray_core/xray
-      # - XRAY_ASSETS_PATH=/var/lib/marzban/xray_core/xray
+      - XRAY_ASSETS_PATH=/var/lib/marzban/assets
       - SQLALCHEMY_DATABASE_URL=sqlite:////var/lib/marzban/db.sqlite3
     volumes:
       - ./settings/xray_config.rendered.json:/var/lib/marzban/xray_config.json
       - ./settings/clash.yaml:/var/lib/marzban/templates/clash/default.yml
       - ./xray:/var/lib/marzban/xray_core/
+      - ./assets:/var/lib/marzban/assets/
       - marzban_data:/var/lib/marzban/
     network_mode: "host"
     restart: unless-stopped
@@ -26,12 +27,8 @@ services:
   caddy:
     image: caddy:2.10.2-alpine
     container_name: caddy
-    environment:
-      - DOMAIN=${DOMAIN}
-      - DASHBOARD_PATH=${DASHBOARD_PATH}
-      - SUBSCRIPTION_PATH=${SUBSCRIPTION_PATH}
     volumes:
-      - ./settings/Caddyfile:/etc/caddy/Caddyfile
+      - ./settings/Caddyfile.rendered:/etc/caddy/Caddyfile
       - caddy_data:/data/
       - marzban_data:/var/lib/marzban/
     ports:

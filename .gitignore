@@ -1,5 +1,10 @@
 .env
 settings/xray_config.rendered.json
+settings/Caddyfile.rendered
 
 xray/*
 !xray/.gitkeep
+
+assets/*
+!assets/.gitkeep
+!assets/update.sh
