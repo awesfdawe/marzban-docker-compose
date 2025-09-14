@@ -3,10 +3,10 @@
 }
 
 $DOMAIN {
-    handle $DASHBOARD_PATH {
+    handle $DASHBOARD_PATH* {
         reverse_proxy unix//var/lib/marzban/marzban.socket
     }
-    handle $SUBSCRIPTION_PATH {
+    handle $SUBSCRIPTION_PATH* {
         reverse_proxy unix//var/lib/marzban/marzban.socket
     }
     handle /api/* {
