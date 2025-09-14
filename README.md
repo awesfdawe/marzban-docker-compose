@@ -3,7 +3,7 @@
 ## Предварительные требования
 - [Базовые навыки работы в Linux](https://www.geeksforgeeks.org/linux-unix/linux-commands-cheat-sheet/)
 - [Базовые навыки работы с docker и docker compose](https://devhints.io/docker-compose)
-- Установленные Docker и Docker Compose v2: https://docs.docker.com/engine/install/
+- [Установленные Docker и Docker Compose v2](https://docs.docker.com/engine/install/)
 - Домен, указывающий на ваш сервер (без CDN)
 - Порты **80**, **443** и **8443** должны быть свободны
 
