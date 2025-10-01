@@ -1,5 +1,5 @@
 # marzban-docker-compose
-Marzban с готовым к использованию прокси VLESS REALITY steal oneself, заглушка [jellyfin](https://jellyfin.org/)
+[Marzban](https://github.com/Gozargah/Marzban) с готовым к использованию прокси VLESS REALITY steal oneself, заглушка [jellyfin](https://jellyfin.org/)
 ## Предварительные требования
 - [Базовые навыки работы в Linux](https://www.geeksforgeeks.org/linux-unix/linux-commands-cheat-sheet/)
 - [Базовые навыки работы с docker и docker compose](https://devhints.io/docker-compose)
