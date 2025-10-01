@@ -53,17 +53,20 @@ cd assets
 ./update.sh
 cd ..
 ```
-Желательно установить cron задачу для автообновления geoip. Путь до скрипта указать свой
+Желательно установить [cron задачу](https://linuxhandbook.com/crontab/) для автообновления geoip. Путь до скрипта указать свой
 ```cron
 0 5 * * * /root/marzban-docker-compose/assets/update.sh > /dev/null 2>&1
 ```
 
 7. Создать .env и заполнить его по шаблону
+```bash
+nano .env
+```
 ```ini
 SUDO_USERNAME="username"
 SUDO_PASSWORD="password"
 DASHBOARD_PATH="/randomstringwithoutspecialsymbols1/" # Слеш обязателен в начале и в конце
-SUBSCRIPTION_PATH="/ randomstringwithoutspecialsymbols2/" # Слеш обязателен в начале и в конце
+SUBSCRIPTION_PATH="/randomstringwithoutspecialsymbols2/" # Слеш обязателен в начале и в конце
 DOMAIN="example.com"
 
 # Пункт 2
