@@ -62,12 +62,15 @@ cd ..
 ```ini
 SUDO_USERNAME="username"
 SUDO_PASSWORD="password"
-DASHBOARD_PATH="/randomstringwithoutspecialsymbols1/"
-SUBSCRIPTION_PATH="/randomstringwithoutspecialsymbols2/"
+DASHBOARD_PATH="/randomstringwithoutspecialsymbols1/" # Слеш обязателен в начале и в конце
+SUBSCRIPTION_PATH="/ randomstringwithoutspecialsymbols2/" # Слеш обязателен в начале и в конце
 DOMAIN="example.com"
 
+# Пункт 2
 REALITY_PRIVATEKEY="mK9eTseX8FmTbx593Mk35D7qmmCUNR9awZK2HjuUnzg"
 REALITY_PUBLICKEY="20b5e7n7Hu5fT8d7NSs1t59BDbQloAURjQ1ckiunYVQ"
+
+# Пункт 3
 SHORTID1="827e8f367e501139"
 SHORTID2="e891404488616fb1"
 SHORTID3="ff505b5862b98aa4"
@@ -77,6 +80,7 @@ SHORTID6="7bf9da5a32a14432"
 SHORTID7="c4ccd999b55220ab"
 SHORTID8="adc748ffd45a118c"
 
+# Пункт 4
 WG_PRIVATEKEY="eJtsnHx+LShdEgYhI8ATHmdp+2DHN1b1vNXsrxV1cHQ="
 WG_ENDPOINT="engage.cloudflareclient.com:2408"
 WG_PUBLICKEY="bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuGP51h2wPfgyo="
