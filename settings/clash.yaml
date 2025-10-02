@@ -47,6 +47,13 @@ rule-providers:
     behavior: ipcidr
     format: mrs
     url: https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/mrs/private.mrs
+    interval: 604800
+
+  in-proxy:
+    type: http
+    behavior: domain
+    format: yaml
+    url: https://gist.github.com/awesfdawe/0ecbeed6fded7fb42d0fe67cdf0dd308/raw/in-proxy.yaml
     interval: 86400
 
   hagezi-pro:
@@ -79,6 +86,8 @@ rule-providers:
 
 rules:
   - RULE-SET,private,DIRECT
+
+  - RULE-SET,in-proxy,PROXY
 
   - RULE-SET,hagezi-pro,REJECT
   - RULE-SET,hagezi-tif,REJECT
