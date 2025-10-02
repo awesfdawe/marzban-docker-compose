@@ -29,6 +29,8 @@ dns:
     - tls://1.1.1.1
   nameserver:
     - https://cloudflare-dns.com/dns-query
+  nameserver-policy:
+    '+.lan': system
 
 listeners:
   - listen: 127.0.0.1
