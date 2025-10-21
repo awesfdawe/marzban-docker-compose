@@ -113,6 +113,7 @@ rules:
   - PROCESS-NAME,com.supercell.brawlstars,PROXY
   - PROCESS-NAME,com.supercell.clashofclans,PROXY
   - PROCESS-NAME,com.supercell.clashroyale,PROXY
+  - PROCESS-NAME,ch.protonmail.android,PROXY
 
   - AND,((RULE-SET,telegram),(DST-PORT,444-65535)),PROXY # Телеграм звонки в прокси
 
