@@ -36,6 +36,7 @@ dns:
     - https://cloudflare-dns.com/dns-query
   nameserver-policy:
     '+.lan': system
+    rule-set:supercell: https://xbox-dns.ru/dns-query
 
 listeners:
   - listen: 127.0.0.1
@@ -89,6 +90,13 @@ rule-providers:
     url: https://cdn.jsdelivr.net/gh/legiz-ru/mihomo-rule-sets@refs/heads/main/ru-bundle/itdoginfo-inside-russia.mrs
     interval: 86400
 
+  supercell:
+    type: http
+    behavior: domain
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@refs/heads/meta/geo/geosite/supercell.mrs
+    interval: 86400
+
   telegram:
     type: http
     behavior: ipcidr
@@ -110,10 +118,6 @@ rules:
   - PROCESS-NAME,Discord.exe,PROXY
   - PROCESS-NAME,Vesktop.exe,PROXY
   - PROCESS-NAME,com.discord,PROXY
-  - PROCESS-NAME,com.supercell.brawlstars,PROXY
-  - PROCESS-NAME,com.supercell.clashofclans,PROXY
-  - PROCESS-NAME,com.supercell.clashroyale,PROXY
-  - PROCESS-NAME,ch.protonmail.android,PROXY
 
   - AND,((RULE-SET,telegram),(DST-PORT,444-65535)),PROXY # Телеграм звонки в прокси
 
