@@ -57,15 +57,15 @@ rule-providers:
   in-proxy:
     type: http
     behavior: domain
-    format: yaml
-    url: https://gist.github.com/awesfdawe/0ecbeed6fded7fb42d0fe67cdf0dd308/raw/in-proxy.yaml
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/awesfdawe/hagezi-mihomo-rule-sets@personal/personal/in-proxy.mrs
     interval: 86400
 
   questionable-in-proxy:
     type: http
     behavior: domain
-    format: yaml
-    url: https://gist.github.com/awesfdawe/0ecbeed6fded7fb42d0fe67cdf0dd308/raw/questionable-in-proxy.yaml
+    format: mrs
+    url: https://cdn.jsdelivr.net/gh/awesfdawe/hagezi-mihomo-rule-sets@personal/personal/questionable-in-proxy.mrs
     interval: 86400
 
   hagezi-pro:
