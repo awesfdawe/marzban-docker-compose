@@ -38,10 +38,10 @@ docker run --rm --entrypoint "" virb3/wgcf:latest sh -c \
 && cat wgcf-profile.conf"
 ```
 
-5. Обновить версию ядра Xray. Версия v25.9.11 проверена
+5. Обновить версию ядра Xray. Версия v25.12.1 проверена
 ```bash
 cd xray
-wget https://github.com/XTLS/Xray-core/releases/download/v25.9.11/Xray-linux-64.zip
+wget https://github.com/XTLS/Xray-core/releases/download/v25.12.1/Xray-linux-64.zip
 unzip Xray-linux-64.zip
 rm Xray-linux-64.zip
 cd ..
