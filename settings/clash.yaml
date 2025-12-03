@@ -96,6 +96,8 @@ rules:
   - PROCESS-NAME,Discord.exe,PROXY
   - PROCESS-NAME,Vesktop.exe,PROXY
   - PROCESS-NAME,com.discord,PROXY
+  - PROCESS-NAME,RobloxPlayerBeta.exe,PROXY
+  - PROCESS-NAME,com.roblox.client,PROXY
 
   - AND,((RULE-SET,telegram),(DST-PORT,444-65535)),PROXY # Телеграм звонки в прокси
 
